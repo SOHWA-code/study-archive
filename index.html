@@ -4,11 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Archive</title>
-    <!-- 파비콘 설정 -->
-    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
-    <link rel="alternate icon" type="image/png" href="assets/icons/favicon.png">
-    <link rel="manifest" href="assets/icons/site.webmanifest">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Firebase SDK 임포트
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+
+        // Firebase 설정
+        const firebaseConfig = {
+            apiKey: "AIzaSyA_73CbqS0gqFYSZDC1g0y090TeRVm3rLU",
+            authDomain: "study-archive.firebaseapp.com",
+            projectId: "study-archive",
+            storageBucket: "study-archive.firebasestorage.app",
+            messagingSenderId: "455564958152",
+            appId: "1:455564958152:web:6bec231bf142a0ff9808fd",
+            measurementId: "G-32XZRB7M2J"
+        };
+
+        // Firebase 초기화
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // 인증 상태 체크
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.replace('login.html');
+            }
+        });
+    </script>
     <style>
         :root {
             --text-primary: #333;
@@ -320,26 +343,33 @@
             }
         }
     </style>
+    <!-- 파비콘 설정 -->
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="alternate icon" type="image/png" href="assets/icons/favicon.png">
+    <link rel="manifest" href="assets/icons/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 인증 체크 스크립트 -->
-    <script>
-        (function checkAuth() {
-            if (!localStorage.getItem('isAuthenticated')) {
-                console.log('인증되지 않은 사용자입니다. 로그인 페이지로 이동합니다.');
-                window.location.replace('login.html');
-            } else {
-                console.log('인증된 사용자입니다.');
-                document.body.style.visibility = 'visible';
-            }
-        })();
+    <script type="module">
+        // 로그아웃 함수
+        import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            const auth = getAuth();
+            // 페이지가 로드되면 body를 보이게 함
+            document.body.style.visibility = 'visible';
+            
+            // 로그아웃 함수를 전역으로 설정
+            window.logout = async function() {
+                try {
+                    await signOut(auth);
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error('로그아웃 에러:', error);
+                }
+            };
+        });
     </script>
-
-    <style>
-        body {
-            visibility: hidden;
-        }
-    </style>
 
     <header>
         <div class="header-content">
@@ -357,11 +387,7 @@
             </div>
             
             <div class="course-grid">
-                <a href="quantum-basics.html" class="course-card">
-                    <h3 class="course-title">양자역학 기초</h3>
-                    <p class="course-info">기초 물리학 · 2024년 학습 로드맵</p>
-                    <p class="course-description">현대 전자공학의 기반이 되는 양자역학의 기본 개념과 응용을 학습합니다. 파동-입자 이중성, 슈뢰딩거 방정식, 양자 터널링 등을 다룹니다.</p>
-                </a>
+                                <a href="quantum-physics.html" class="course-card">                    <h3 class="course-title">양자역학 기초</h3>                    <p class="course-info">기초 물리학 · 2024년 학습 로드맵</p>                    <p class="course-description">현대 전자공학의 기반이 되는 양자역학의 기본 개념과 응용을 학습합니다. 파동-입자 이중성, 슈뢰딩거 방정식, 양자 터널링 등을 다룹니다.</p>                </a>
 
                 <a href="circuit-theory.html" class="course-card">
                     <h3 class="course-title">회로이론 심화</h3>
@@ -422,12 +448,6 @@
     </footer>
 
     <script>
-        // 로그아웃 함수
-        function logout() {
-            localStorage.removeItem('isAuthenticated');
-            window.location.replace('login.html');
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             // 스크롤 애니메이션
             const observerOptions = {
@@ -449,5 +469,10 @@
             elements.forEach(element => observer.observe(element));
         });
     </script>
+
+    <!-- 로그아웃 버튼 추가 -->
+    <div style="position: fixed; top: 20px; right: 20px;">
+        <button onclick="logout()" style="padding: 8px 16px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">로그아웃</button>
+    </div>
 </body>
 </html> 
