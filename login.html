@@ -26,26 +26,29 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // 로그인 폼 제출 처리
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const email = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                window.location.href = 'index.html';
-            } catch (error) {
-                document.getElementById('errorMessage').style.display = 'block';
-                console.error('로그인 에러:', error);
-            }
-        });
-
         // 인증 상태 체크
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                window.location.href = 'index.html';
+                window.location.href = window.location.origin + '/study-archive/';
             }
+        });
+
+        // 로그인 폼 제출 처리
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    // 로그인 성공 시 메인 페이지로 이동
+                    window.location.href = window.location.origin + '/study-archive/';
+                } catch (error) {
+                    document.getElementById('errorMessage').style.display = 'block';
+                    console.error('로그인 에러:', error);
+                }
+            });
         });
     </script>
     <style>
