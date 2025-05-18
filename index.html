@@ -33,7 +33,7 @@
             if (!user) {
                 // 현재 페이지가 login.html이 아닐 경우에만 리다이렉트
                 if (!window.location.href.includes('login.html')) {
-                    window.location.href = window.location.origin + '/study-archive/login.html';
+                    window.location.href = './login.html';
                 }
             } else {
                 document.documentElement.style.visibility = 'visible';
