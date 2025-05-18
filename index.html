@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-tertiary: #999;
+            --bg-color: #fff;
+            --border-color: #eee;
+            --section-padding: 120px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.8;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            background-color: #f8f8f8;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 3.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-weight: 300;
+            white-space: pre-line;
+        }
+
+        section {
+            padding: var(--section-padding) 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        .section-header {
+            margin-bottom: 80px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 100px;
+            margin-top: 60px;
+        }
+
+        .course-card {
+            display: block;
+            text-decoration: none;
+            padding: 40px;
+            transition: all 0.3s ease;
+            background-color: #fff;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .course-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .course-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .course-info {
+            font-size: 1rem;
+            color: var(--text-tertiary);
+            margin-bottom: 1.5rem;
+        }
+
+        .course-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            margin-top: 60px;
+        }
+
+        .resource-card {
+            padding: 40px;
+            background-color: #fff;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .resource-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .resource-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .resource-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .resource-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .resource-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 4px;
+            height: 4px;
+            background-color: var(--text-primary);
+            transform: translateY(-50%);
+        }
+
+        .resource-links a:hover {
+            color: var(--text-tertiary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 40px;
+            }
+
+            .course-grid {
+                gap: 60px;
+            }
+
+            .resources-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 80px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .course-title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Study Archive</h1>
+            <p class="subtitle">MIT OpenCourseWare와 함께하는 개인 맞춤형 학습 여정
+깊이 있는 지식 탐구와 체계적인 학습을 위한 공간</p>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">MIT OCW 강의</h2>
+                <p class="section-subtitle">세계 최고의 교육 기관에서 제공하는 양질의 강의를 통해 깊이 있는 학습을 경험하세요.</p>
+            </div>
+            
+            <div class="course-grid">
+                <a href="quantum-physics.html" class="course-card">
+                    <h3 class="course-title">Quantum Physics I</h3>
+                    <p class="course-info">Spring 2013 · Professor Adams</p>
+                    <p class="course-description">양자 물리학의 기초 개념과 응용을 다루는 강의입니다. 파동 역학부터 양자역학의 기본 원리까지 체계적으로 학습합니다.</p>
+                </a>
+
+                <a href="circuits-electronics.html" class="course-card">
+                    <h3 class="course-title">Circuits and Electronics</h3>
+                    <p class="course-info">Spring 2007 · Professor Agarwal</p>
+                    <p class="course-description">전자 회로의 기본 원리와 설계를 학습하는 강의입니다. 실제 회로 구현과 분석 방법을 배웁니다.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">추가 학습 자료</h2>
+                <p class="section-subtitle">다양한 학습 플랫폼과 자료를 통해 보다 풍부한 학습 경험을 제공합니다.</p>
+            </div>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3 class="resource-title">MATLAB Academy</h3>
+                    <p class="resource-description">MATLAB을 활용한 과학 계산 및 시뮬레이션 학습 플랫폼입니다.</p>
+                    <div class="resource-links">
+                        <a href="https://matlabacademy.mathworks.com/kr/">기초 과정</a>
+                        <a href="https://matlabacademy.mathworks.com/kr/advanced">고급 과정</a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <h3 class="resource-title">The Engineering Mindset</h3>
+                    <p class="resource-description">엔지니어링 기초 지식과 실무 프로젝트 학습 자료를 제공합니다.</p>
+                    <div class="resource-links">
+                        <a href="https://theengineeringmindset.com/basics/">기초 개념</a>
+                        <a href="https://theengineeringmindset.com/projects/">프로젝트</a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <h3 class="resource-title">전자 부품 데이터베이스</h3>
+                    <p class="resource-description">전자 부품 정보와 데이터시트를 제공하는 전문 데이터베이스입니다.</p>
+                    <div class="resource-links">
+                        <a href="https://www.mouser.kr/">Mouser Electronics</a>
+                        <a href="https://www.mouser.kr/technical-resources/">기술 자료실</a>
+                        <a href="https://componentsearchengine.com/">Component Search Engine</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Study Archive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 스크롤 애니메이션
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // 관찰할 요소들 선택
+            const elements = document.querySelectorAll('section, .fade-in, .course-card, .resource-card, footer');
+            elements.forEach(element => observer.observe(element));
+        });
+    </script>
+</body>
+</html> 

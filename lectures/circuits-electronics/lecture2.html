@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Circuit Analysis Method - Circuits and Electronics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.7;
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+
+        .home-link {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 2rem;
+        }
+
+        .lecture-header {
+            margin-bottom: 2rem;
+        }
+
+        .course-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+        }
+
+        .lecture-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto 2rem;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-top: 56.25%;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .learning-section {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .checkbox-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: #fff;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .notes-section {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .notes-input {
+            width: 100%;
+            min-height: 200px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .notes-input:focus {
+            outline: none;
+            border-color: #fff;
+        }
+
+        .save-btn {
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .save-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #aaa;
+            text-decoration: none;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <a href="../../index.html" class="home-link">
+            <i class="fas fa-home"></i>
+            Study Archive
+        </a>
+    </nav>
+
+    <div class="container">
+        <a href="../../circuits-electronics.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            강의 목록으로 돌아가기
+        </a>
+
+        <header class="lecture-header">
+            <h2 class="course-title">Circuits and Electronics</h2>
+            <h1 class="lecture-title">Lecture 2: Basic Circuit Analysis Method</h1>
+        </header>
+
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/2vHGYdepKLw" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <section class="learning-section">
+            <h2 class="section-title">학습 체크리스트</h2>
+            <div class="checkbox-list">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="check1">
+                    <label for="check1">키르히호프의 전압 법칙(KVL) 이해</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="check2">
+                    <label for="check2">키르히호프의 전류 법칙(KCL) 이해</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="check3">
+                    <label for="check3">기본 회로 분석 방법론 학습</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="check4">
+                    <label for="check4">회로 방정식 수립 및 해결 방법 이해</label>
+                </div>
+            </div>
+        </section>
+
+        <section class="notes-section">
+            <h2 class="section-title">강의 노트</h2>
+            <textarea class="notes-input" placeholder="이 강의에 대한 노트를 작성하세요..."></textarea>
+            <button class="save-btn">노트 저장</button>
+        </section>
+    </div>
+
+    <script>
+        // 체크박스 상태 저장
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const STORAGE_KEY = 'circuits_electronics_lecture2_progress';
+
+        // 저장된 체크박스 상태 불러오기
+        const savedProgress = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach((checkbox, index) => {
+            checkbox.checked = savedProgress[`check${index + 1}`] || false;
+            
+            checkbox.addEventListener('change', () => {
+                const progress = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                progress[`check${index + 1}`] = checkbox.checked;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+                
+                // 진도율 업데이트
+                updateProgress();
+            });
+        });
+
+        // 노트 저장
+        const notesInput = document.querySelector('.notes-input');
+        const saveBtn = document.querySelector('.save-btn');
+        const NOTES_KEY = 'circuits_electronics_lecture2_notes';
+
+        // 저장된 노트 불러오기
+        notesInput.value = localStorage.getItem(NOTES_KEY) || '';
+
+        saveBtn.addEventListener('click', () => {
+            localStorage.setItem(NOTES_KEY, notesInput.value);
+            alert('노트가 저장되었습니다.');
+        });
+
+        // 진도율 업데이트 함수
+        function updateProgress() {
+            const totalCheckboxes = checkboxes.length;
+            const checkedBoxes = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const progress = Math.round((checkedBoxes / totalCheckboxes) * 100);
+
+            // 전체 강의 진도율 업데이트
+            const courseProgress = JSON.parse(localStorage.getItem('circuits_electronics_progress') || '{}');
+            courseProgress['lecture2'] = progress === 100;
+            localStorage.setItem('circuits_electronics_progress', JSON.stringify(courseProgress));
+        }
+    </script>
+</body>
+</html> 

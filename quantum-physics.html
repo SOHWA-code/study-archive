@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Physics I - Study Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.7;
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+
+        .home-link {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .course-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .course-nav a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .course-nav a:hover {
+            color: #fff;
+        }
+
+        .course-header {
+            height: 50vh;
+            background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)),
+                        url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .course-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-info {
+            color: #aaa;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .lecture-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .lecture-card {
+            background: #111;
+            border: 1px solid #333;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .lecture-card:hover {
+            border-color: #fff;
+            transform: translateY(-5px);
+        }
+
+        .lecture-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .video-duration {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-top: 56.25%;
+            background: #000;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .materials-section {
+            background: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .material-card {
+            background: #111;
+            border: 1px solid #333;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .material-card:hover {
+            border-color: #fff;
+            transform: translateY(-5px);
+        }
+
+        .material-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            color: #fff;
+        }
+
+        #notes {
+            margin-top: 80px;
+        }
+
+        .note-section {
+            background: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .note-input {
+            width: 100%;
+            min-height: 200px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .note-input:focus {
+            outline: none;
+            border-color: #fff;
+        }
+
+        .save-btn {
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <a href="index.html" class="home-link">
+            <i class="fas fa-home"></i>
+            Study Archive
+        </a>
+        <div class="course-nav">
+            <a href="#lectures">강의</a>
+            <a href="#materials">강의자료</a>
+            <a href="#notes">메모</a>
+        </div>
+    </nav>
+
+    <header class="course-header">
+        <div>
+            <h1 class="course-title">Quantum Physics I</h1>
+            <p class="course-info">Spring 2013 | Professor Adams</p>
+            <p class="course-info">MIT OpenCourseWare</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="lectures" class="content-section">
+            <h2 class="section-title">강의 목록</h2>
+            <div class="lecture-list">
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 1</div>
+                    <h3 class="video-title">Introduction to Superposition</h3>
+                    <p class="video-duration">1:16:07</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/lZ3bPUKo5zc" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 2</div>
+                    <h3 class="video-title">Experimental Facts of Life</h3>
+                    <p class="video-duration">1:20:12</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/U6fI3brP8V4" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 3</div>
+                    <h3 class="video-title">The Wave Function</h3>
+                    <p class="video-duration">1:17:55</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/Ei8CFin00PY" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 4</div>
+                    <h3 class="video-title">Expectations, Momentum, and Uncertainty</h3>
+                    <p class="video-duration">1:20:07</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/NN2txluv1PY" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 5</div>
+                    <h3 class="video-title">Operators and the Schrödinger Equation</h3>
+                    <p class="video-duration">1:23:14</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/lMFgfqRZYoc" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 6</div>
+                    <h3 class="video-title">Time Evolution and the Schrödinger Equation</h3>
+                    <p class="video-duration">1:22:19</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/TWpyhsPAK14" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 7</div>
+                    <h3 class="video-title">More on Energy Eigenstates</h3>
+                    <p class="video-duration">1:15:54</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/Uk5DUtHY7LM" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 8</div>
+                    <h3 class="video-title">Quantum Harmonic Oscillator</h3>
+                    <p class="video-duration">1:21:00</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/qu-jyrwW6hw" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 9</div>
+                    <h3 class="video-title">Operator Methods for the Harmonic Oscillator</h3>
+                    <p class="video-duration">1:17:54</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/jJX_1zT73U0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 10</div>
+                    <h3 class="video-title">Clicker Bonanza and Dirac Notation</h3>
+                    <p class="video-duration">1:21:32</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/VSqpYPgxcps" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 11</div>
+                    <h3 class="video-title">Dispersion of the Gaussian and the Finite Well</h3>
+                    <p class="video-duration">1:21:05</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/iZKAtzK5WXM" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 12</div>
+                    <h3 class="video-title">The Dirac Well and Scattering off the Finite Step</h3>
+                    <p class="video-duration">1:23:48</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/lHhw_SExF1M" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 13</div>
+                    <h3 class="video-title">More on Scattering</h3>
+                    <p class="video-duration">1:22:35</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/SsCeVABM4Mo" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 14</div>
+                    <h3 class="video-title">Resonance and the S-Matrix</h3>
+                    <p class="video-duration">1:23:56</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/wH9nO8_aDSI" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 15</div>
+                    <h3 class="video-title">Eigenstates of the Angular Momentum Part 1</h3>
+                    <p class="video-duration">1:24:42</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/H5m39G-FAwE" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 16</div>
+                    <h3 class="video-title">Eigenstates of the Angular Momentum Part 2</h3>
+                    <p class="video-duration">1:20:38</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/R4LyPVfGWtI" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 17</div>
+                    <h3 class="video-title">More on Central Potentials</h3>
+                    <p class="video-duration">1:20:42</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/mLe8YCnUed4" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 18</div>
+                    <h3 class="video-title">"Hydrogen" and its Discontents</h3>
+                    <p class="video-duration">1:20:07</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/G5_u6k9LR3E" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 19</div>
+                    <h3 class="video-title">Identical Particles</h3>
+                    <p class="video-duration">1:23:01</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/9lX2FENOe4o" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 20</div>
+                    <h3 class="video-title">Periodic Lattices Part 1</h3>
+                    <p class="video-duration">1:24:20</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/gK_D6RkbMy8" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 21</div>
+                    <h3 class="video-title">Periodic Lattices Part 2</h3>
+                    <p class="video-duration">1:22:21</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/SZlnoxak4xM" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 22</div>
+                    <h3 class="video-title">Metals, Insulators, and Semiconductors</h3>
+                    <p class="video-duration">1:26:35</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/Oq4OHT4hhJc" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 23</div>
+                    <h3 class="video-title">More on Spin</h3>
+                    <p class="video-duration">1:22:10</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/Rc1vFAUnRUM" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 24</div>
+                    <h3 class="video-title">Entanglement: QComputing, EPR, and Bell's Theorem</h3>
+                    <p class="video-duration">1:22:45</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/awpnsGl08bc" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="materials" class="content-section">
+            <h2 class="section-title">강의자료 및 과제</h2>
+            <div class="materials-grid">
+                <div class="material-card">
+                    <h4 class="material-title">강의 슬라이드</h4>
+                    <a href="https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2013/resources/lecture-notes/" class="download-btn" target="_blank">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF 보기
+                    </a>
+                </div>
+                <div class="material-card">
+                    <h4 class="material-title">과제</h4>
+                    <a href="https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2013/pages/assignments/" class="download-btn" target="_blank">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF 보기
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="notes" class="content-section">
+            <h2 class="section-title">메모</h2>
+            <div class="note-section">
+                <textarea class="note-input" placeholder="강의 내용에 대한 메모를 작성하세요..."></textarea>
+                <button class="save-btn">저장하기</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 메모 저장 기능
+        document.querySelector('.save-btn').addEventListener('click', () => {
+            const noteContent = document.querySelector('.note-input').value;
+            localStorage.setItem('quantum_physics_notes', noteContent);
+            alert('메모가 저장되었습니다.');
+        });
+
+        // 저장된 메모 불러오기
+        window.addEventListener('load', () => {
+            const savedNote = localStorage.getItem('quantum_physics_notes');
+            if (savedNote) {
+                document.querySelector('.note-input').value = savedNote;
+            }
+        });
+    </script>
+</body>
+</html> 

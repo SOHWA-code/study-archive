@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuits and Electronics - Study Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.7;
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+
+        .home-link {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .course-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .course-nav a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .course-nav a:hover {
+            color: #fff;
+        }
+
+        .course-header {
+            height: 50vh;
+            background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)),
+                        url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .course-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .course-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-info {
+            color: #aaa;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+        }
+
+        .nav-tab {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab.active {
+            color: #fff;
+        }
+
+        .nav-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-tab.active::after {
+            transform: scaleX(1);
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .video-card {
+            background: #111;
+            border: 1px solid #333;
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: relative;
+            padding-top: 56.25%;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .completion-check {
+            color: #4CAF50;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lecture-card:hover .completion-check {
+            opacity: 0.5;
+        }
+
+        .completion-check:hover {
+            opacity: 1 !important;
+        }
+
+        .completion-check.completed {
+            opacity: 1;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .material-card {
+            background: #111;
+            border: 1px solid #333;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .material-card:hover {
+            border-color: #fff;
+            transform: translateY(-5px);
+        }
+
+        .material-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            color: #fff;
+        }
+
+        .note-section {
+            background: #111;
+            border: 1px solid #333;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .note-input {
+            width: 100%;
+            min-height: 200px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .note-input:focus {
+            outline: none;
+            border-color: #fff;
+        }
+
+        .save-btn {
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .back-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid #333;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .lecture-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .lecture-card {
+            background: #111;
+            border: 1px solid #333;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .lecture-card:hover {
+            border-color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .lecture-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-duration {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .video-duration::before {
+            content: '\f017';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 400;
+        }
+
+        .video-container {
+            position: relative;
+            padding-top: 56.25%;
+            background: #000;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .lecture-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .completion-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: #888;
+        }
+
+        .completion-status i {
+            font-size: 0.8rem;
+        }
+
+        .completion-status.completed {
+            color: #4CAF50;
+        }
+
+        .completion-status.completed i {
+            color: #4CAF50;
+        }
+
+        #notes {
+            margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <a href="index.html" class="home-link">
+            <i class="fas fa-home"></i>
+            Study Archive
+        </a>
+        <div class="course-nav">
+            <a href="#lectures">강의</a>
+            <a href="#materials">강의자료</a>
+            <a href="#exams">시험</a>
+            <a href="#notes">메모</a>
+        </div>
+    </nav>
+
+    <header class="course-header">
+        <div>
+            <h1 class="course-title">Circuits and Electronics</h1>
+            <p class="course-info">Spring 2007 | Professor Agarwal</p>
+            <p class="course-info">MIT OpenCourseWare</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="lectures" class="content-section">
+            <h2 class="section-title">강의 목록</h2>
+            <div class="lecture-list">
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 1</div>
+                    <h3 class="video-title">
+                        Introduction to 6.002
+                        <i class="fas fa-check completion-check" data-lecture="1"></i>
+                    </h3>
+                    <p class="video-duration">1:01:27</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/AfQxyVuLeCs" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 2</div>
+                    <h3 class="video-title">                        Basic Circuit Analysis Method                        <i class="fas fa-check completion-check" data-lecture="2"></i>                    </h3>
+                    <p class="video-duration">1:01:34</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/2vHGYdepKLw" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 3</div>
+                    <h3 class="video-title">Superposition, Thévenin and Norton</h3>
+                    <p class="video-duration">1:01:42</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/RsJ1eg7XNVs" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 4</div>
+                    <h3 class="video-title">The Digital Abstraction</h3>
+                    <p class="video-duration">1:01:51</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/4TCnYYpZxEc" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 5</div>
+                    <h3 class="video-title">Inside the Digital Gate</h3>
+                    <p class="video-duration">1:02:42</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/v6vqWasIHaw" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 6</div>
+                    <h3 class="video-title">Nonlinear Analysis</h3>
+                    <p class="video-duration">1:02:11</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/OGtElTMJidE" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 7</div>
+                    <h3 class="video-title">Incremental Analysis</h3>
+                    <p class="video-duration">1:02:15</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/JqvKtMNz3RQ" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 8</div>
+                    <h3 class="video-title">Dependent Sources and Amplifiers</h3>
+                    <p class="video-duration">1:02:31</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/bEJ0-8pANA4" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 9</div>
+                    <h3 class="video-title">MOSFET Amplifier Large Signal Analysis (Part 1)</h3>
+                    <p class="video-duration">1:02:44</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/Nijya-QJ45Y" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 9B</div>
+                    <h3 class="video-title">MOSFET Amplifier Large Signal Analysis (Part 2)</h3>
+                    <p class="video-duration">1:02:44</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/jURSAKBlIZA" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 10</div>
+                    <h3 class="video-title">Amplifiers - Small Signal Model</h3>
+                    <p class="video-duration">1:02:51</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/9RqFFlZgf60" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 11</div>
+                    <h3 class="video-title">Small Signal Circuits</h3>
+                    <p class="video-duration">1:02:35</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/R4KxlqsuZ0A" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 12</div>
+                    <h3 class="video-title">Capacitors and First-Order Systems</h3>
+                    <p class="video-duration">1:02:42</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/COdQmA9g9S8" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 13</div>
+                    <h3 class="video-title">Digital Circuit Speed</h3>
+                    <p class="video-duration">1:02:38</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/TXJIhDHtHSI" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 14</div>
+                    <h3 class="video-title">State and Memory</h3>
+                    <p class="video-duration">1:02:45</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/bX8i2yECWaU" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 15</div>
+                    <h3 class="video-title">Second-Order Systems (Part 1)</h3>
+                    <p class="video-duration">1:02:52</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/ypX20WnHNQw" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 15B</div>
+                    <h3 class="video-title">Second-Order Systems (Part 2)</h3>
+                    <p class="video-duration">1:02:52</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/-gRXU-O1FY4" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 16</div>
+                    <h3 class="video-title">Sinusoidal Steady State</h3>
+                    <p class="video-duration">1:02:41</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/3GdMaDzIUeQ" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 17</div>
+                    <h3 class="video-title">The Impedance Model</h3>
+                    <p class="video-duration">1:02:37</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/Km9YIdkc2Oo" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 18</div>
+                    <h3 class="video-title">Filters</h3>
+                    <p class="video-duration">1:02:49</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/WT-qzgaKeGI" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 19</div>
+                    <h3 class="video-title">The Operational Amplifier Abstraction</h3>
+                    <p class="video-duration">1:02:55</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/V0z_f7qxLcY" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 20</div>
+                    <h3 class="video-title">Operational Amplifier Circuits</h3>
+                    <p class="video-duration">1:02:43</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/2SwT6JnfCq8" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 21</div>
+                    <h3 class="video-title">Op Amps Positive Feedback</h3>
+                    <p class="video-duration">1:02:39</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/ke3SL_R92ys" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 22</div>
+                    <h3 class="video-title">Energy and Power</h3>
+                    <p class="video-duration">1:02:47</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/wNuBD4PYWvs" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 23</div>
+                    <h3 class="video-title">Energy, CMOS</h3>
+                    <p class="video-duration">1:02:33</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/JB2HgohNHYQ" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 24</div>
+                    <h3 class="video-title">Energy and Power in Digital Circuits</h3>
+                    <p class="video-duration">1:02:46</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/4TCvGGD0bXQ" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="lecture-card">
+                    <div class="lecture-number">Lecture 25</div>
+                    <h3 class="video-title">Violating the Abstraction Barrier</h3>
+                    <p class="video-duration">1:02:40</p>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dyxcCoUgETU" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="materials" class="content-section">
+            <h2 class="section-title">강의자료 및 과제</h2>
+            <div class="materials-grid">
+                <div class="material-card">
+                    <h4 class="material-title">강의 슬라이드</h4>
+                    <a href="https://ocw.mit.edu/courses/6-002-circuits-and-electronics-spring-2007/pages/lecture-notes/" class="download-btn" target="_blank">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF 보기
+                    </a>
+                </div>
+                <div class="material-card">
+                    <h4 class="material-title">과제</h4>
+                    <a href="https://ocw.mit.edu/courses/6-002-circuits-and-electronics-spring-2007/pages/assignments/" class="download-btn" target="_blank">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF 보기
+                    </a>
+                </div>
+                <div class="material-card">
+                    <h4 class="material-title">시험</h4>
+                    <a href="https://ocw.mit.edu/courses/6-002-circuits-and-electronics-spring-2007/pages/exams/" class="download-btn" target="_blank">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF 보기
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="exams" class="content-section">
+            <h2 class="section-title">시험</h2>
+            <div class="materials-grid">
+                <div class="material-card">
+                    <h3 class="material-title">중간고사</h3>
+                    <a href="#" class="download-btn">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF 보기
+                    </a>
+                </div>
+                <div class="material-card">
+                    <h3 class="material-title">기말고사</h3>
+                    <a href="#" class="download-btn">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF 보기
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="notes" class="content-section">
+            <h2 class="section-title">메모</h2>
+            <div class="note-section">
+                <textarea class="note-input" placeholder="강의 내용에 대한 메모를 작성하세요..."></textarea>
+                <button class="save-btn">저장하기</button>
+            </div>
+        </section>
+    </div>
+
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-home"></i>
+    </a>
+
+    <script>
+        // 메모 저장 기능
+        document.querySelector('.save-btn').addEventListener('click', () => {
+            const noteContent = document.querySelector('.note-input').value;
+            localStorage.setItem('circuits_electronics_notes', noteContent);
+            alert('메모가 저장되었습니다.');
+        });
+
+        // 저장된 메모 불러오기
+        window.addEventListener('load', () => {
+            const savedNote = localStorage.getItem('circuits_electronics_notes');
+            if (savedNote) {
+                document.querySelector('.note-input').value = savedNote;
+            }
+        });
+    </script>
+</body>
+</html> 
