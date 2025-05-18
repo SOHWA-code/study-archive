@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <!-- 배경 원 -->
+    <circle cx="256" cy="256" r="256" fill="#1E3D59"/>
+    
+    <!-- 회로 패턴 -->
+    <g fill="none" stroke="#17A2B8" stroke-width="12">
+        <!-- 중앙 회로 라인 -->
+        <path d="M128 256 H384" />
+        <circle cx="256" cy="256" r="24" fill="#17A2B8"/>
+        
+        <!-- 상단 회로 -->
+        <path d="M256 128 V232" />
+        <circle cx="256" cy="128" r="16" fill="#17A2B8"/>
+        
+        <!-- 하단 회로 -->
+        <path d="M256 280 V384" />
+        <circle cx="256" cy="384" r="16" fill="#17A2B8"/>
+        
+        <!-- 좌측 회로 -->
+        <path d="M128 256 V384" />
+        <circle cx="128" cy="384" r="16" fill="#17A2B8"/>
+        
+        <!-- 우측 회로 -->
+        <path d="M384 128 V256" />
+        <circle cx="384" cy="128" r="16" fill="#17A2B8"/>
+    </g>
+    
+    <!-- 책 형태 -->
+    <path d="M192 192 L320 192 L320 320 L192 320 Z" 
+          fill="none" 
+          stroke="#FFFFFF" 
+          stroke-width="12"
+          stroke-linejoin="round"/>
+    <path d="M208 208 L304 208" stroke="#FFFFFF" stroke-width="8"/>
+    <path d="M208 240 L304 240" stroke="#FFFFFF" stroke-width="8"/>
+    <path d="M208 272 L304 272" stroke="#FFFFFF" stroke-width="8"/>
+</svg> 

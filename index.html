@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Archive</title>
+    <!-- 파비콘 설정 -->
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="alternate icon" type="image/png" href="assets/icons/favicon.png">
+    <link rel="manifest" href="assets/icons/site.webmanifest">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -27,6 +31,7 @@
             font-family: 'Noto Sans KR', sans-serif;
             line-height: 1.8;
             letter-spacing: -0.02em;
+            visibility: hidden;
         }
 
         .container {
@@ -241,6 +246,23 @@
             transform: translateY(0);
         }
 
+        .license-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .license-info a {
+            color: var(--text-tertiary);
+            text-decoration: underline;
+        }
+
+        .license-info a:hover {
+            color: var(--text-primary);
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -300,32 +322,51 @@
     </style>
 </head>
 <body>
+    <!-- 인증 체크 스크립트 -->
+    <script>
+        (function checkAuth() {
+            if (!localStorage.getItem('isAuthenticated')) {
+                console.log('인증되지 않은 사용자입니다. 로그인 페이지로 이동합니다.');
+                window.location.replace('login.html');
+            } else {
+                console.log('인증된 사용자입니다.');
+                document.body.style.visibility = 'visible';
+            }
+        })();
+    </script>
+
+    <style>
+        body {
+            visibility: hidden;
+        }
+    </style>
+
     <header>
         <div class="header-content">
             <h1>Study Archive</h1>
-            <p class="subtitle">MIT OpenCourseWare와 함께하는 개인 맞춤형 학습 여정
-깊이 있는 지식 탐구와 체계적인 학습을 위한 공간</p>
+            <p class="subtitle">전자공학 학습을 위한 개인 맞춤형 학습 공간
+체계적인 이론 학습과 실무 프로젝트 경험을 위한 아카이브</p>
         </div>
     </header>
 
     <section>
         <div class="container">
             <div class="section-header fade-in">
-                <h2 class="section-title">MIT OCW 강의</h2>
-                <p class="section-subtitle">세계 최고의 교육 기관에서 제공하는 양질의 강의를 통해 깊이 있는 학습을 경험하세요.</p>
+                <h2 class="section-title">전자공학 기초 이론</h2>
+                <p class="section-subtitle">기초부터 심화까지, 체계적인 전자공학 이론 학습을 위한 자료를 제공합니다.</p>
             </div>
             
             <div class="course-grid">
-                <a href="quantum-physics.html" class="course-card">
-                    <h3 class="course-title">Quantum Physics I</h3>
-                    <p class="course-info">Spring 2013 · Professor Adams</p>
-                    <p class="course-description">양자 물리학의 기초 개념과 응용을 다루는 강의입니다. 파동 역학부터 양자역학의 기본 원리까지 체계적으로 학습합니다.</p>
+                <a href="quantum-basics.html" class="course-card">
+                    <h3 class="course-title">양자역학 기초</h3>
+                    <p class="course-info">기초 물리학 · 2024년 학습 로드맵</p>
+                    <p class="course-description">현대 전자공학의 기반이 되는 양자역학의 기본 개념과 응용을 학습합니다. 파동-입자 이중성, 슈뢰딩거 방정식, 양자 터널링 등을 다룹니다.</p>
                 </a>
 
-                <a href="circuits-electronics.html" class="course-card">
-                    <h3 class="course-title">Circuits and Electronics</h3>
-                    <p class="course-info">Spring 2007 · Professor Agarwal</p>
-                    <p class="course-description">전자 회로의 기본 원리와 설계를 학습하는 강의입니다. 실제 회로 구현과 분석 방법을 배웁니다.</p>
+                <a href="circuit-theory.html" class="course-card">
+                    <h3 class="course-title">회로이론 심화</h3>
+                    <p class="course-info">전자공학 핵심 · 2024년 학습 로드맵</p>
+                    <p class="course-description">아날로그/디지털 회로 설계의 핵심 원리와 해석 방법을 학습합니다. 실제 회로 구현과 시뮬레이션을 통한 실습을 포함합니다.</p>
                 </a>
             </div>
         </div>
@@ -334,36 +375,35 @@
     <section>
         <div class="container">
             <div class="section-header fade-in">
-                <h2 class="section-title">추가 학습 자료</h2>
-                <p class="section-subtitle">다양한 학습 플랫폼과 자료를 통해 보다 풍부한 학습 경험을 제공합니다.</p>
+                <h2 class="section-title">추천 학습 자료</h2>
+                <p class="section-subtitle">온라인 강의, 시뮬레이션 도구, 참고 자료 등 다양한 학습 리소스를 제공합니다.</p>
             </div>
             
             <div class="resources-grid">
                 <div class="resource-card">
-                    <h3 class="resource-title">MATLAB Academy</h3>
-                    <p class="resource-description">MATLAB을 활용한 과학 계산 및 시뮬레이션 학습 플랫폼입니다.</p>
+                    <h3 class="resource-title">시뮬레이션 도구</h3>
+                    <p class="resource-description">회로 설계와 시뮬레이션을 위한 오픈소스 도구 모음입니다.</p>
                     <div class="resource-links">
-                        <a href="https://matlabacademy.mathworks.com/kr/">기초 과정</a>
-                        <a href="https://matlabacademy.mathworks.com/kr/advanced">고급 과정</a>
+                        <a href="https://www.falstad.com/circuit/" target="_blank">Falstad Circuit Simulator</a>
+                        <a href="https://www.circuitlab.com/" target="_blank">CircuitLab</a>
                     </div>
                 </div>
 
                 <div class="resource-card">
-                    <h3 class="resource-title">The Engineering Mindset</h3>
-                    <p class="resource-description">엔지니어링 기초 지식과 실무 프로젝트 학습 자료를 제공합니다.</p>
+                    <h3 class="resource-title">실습 프로젝트</h3>
+                    <p class="resource-description">직접 만들어보는 전자공학 프로젝트 가이드입니다.</p>
                     <div class="resource-links">
-                        <a href="https://theengineeringmindset.com/basics/">기초 개념</a>
-                        <a href="https://theengineeringmindset.com/projects/">프로젝트</a>
+                        <a href="projects/basic.html">기초 프로젝트</a>
+                        <a href="projects/advanced.html">심화 프로젝트</a>
                     </div>
                 </div>
 
                 <div class="resource-card">
-                    <h3 class="resource-title">전자 부품 데이터베이스</h3>
-                    <p class="resource-description">전자 부품 정보와 데이터시트를 제공하는 전문 데이터베이스입니다.</p>
+                    <h3 class="resource-title">참고 자료</h3>
+                    <p class="resource-description">전자공학 학습에 도움이 되는 무료 교육 자료들입니다.</p>
                     <div class="resource-links">
-                        <a href="https://www.mouser.kr/">Mouser Electronics</a>
-                        <a href="https://www.mouser.kr/technical-resources/">기술 자료실</a>
-                        <a href="https://componentsearchengine.com/">Component Search Engine</a>
+                        <a href="https://www.electronics-tutorials.ws/" target="_blank">Electronics Tutorials</a>
+                        <a href="https://www.allaboutcircuits.com/" target="_blank">All About Circuits</a>
                     </div>
                 </div>
             </div>
@@ -373,10 +413,21 @@
     <footer>
         <div class="container">
             <p>&copy; 2024 Study Archive. All rights reserved.</p>
+            <div class="license-info">
+                <p>이 웹사이트는 개인적인 학습 목적으로 제작된 비영리 교육 자료 아카이브입니다.</p>
+                <p>모든 외부 자료는 해당 저작권자의 권리를 존중하며, 관련 라이선스를 준수합니다.</p>
+                <button onclick="logout()" style="margin-top: 20px; padding: 8px 16px; background: var(--text-tertiary); border: none; border-radius: 4px; color: white; cursor: pointer;">로그아웃</button>
+            </div>
         </div>
     </footer>
 
     <script>
+        // 로그아웃 함수
+        function logout() {
+            localStorage.removeItem('isAuthenticated');
+            window.location.replace('login.html');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // 스크롤 애니메이션
             const observerOptions = {

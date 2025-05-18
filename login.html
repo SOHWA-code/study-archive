@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Archive - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-primary: #333;
+            --text-secondary: #666;
+            --bg-color: #fff;
+            --border-color: #eee;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: var(--text-primary);
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .input-group {
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        button {
+            background-color: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background-color: #000;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Study Archive</h1>
+        <p class="description">이 사이트는 승인된 사용자만 접근할 수 있습니다.<br>접근 권한을 요청하려면 관리자에게 문의하세요.</p>
+        
+        <form class="login-form" id="loginForm">
+            <div class="input-group">
+                <label for="username">사용자 ID</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit">로그인</button>
+            <p class="error-message" id="errorMessage">잘못된 로그인 정보입니다.</p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // 여기서 서버에 인증 요청을 보내야 합니다.
+            // 지금은 임시로 로컬 스토리지를 사용합니다.
+            if (checkCredentials(username, password)) {
+                localStorage.setItem('isAuthenticated', 'true');
+                window.location.href = 'index.html';
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
+
+        function checkCredentials(username, password) {
+            // 실제 구현에서는 서버에서 검증해야 합니다.
+            // 이것은 데모용 임시 코드입니다.
+            return username === 'admin' && password === 'password123';
+        }
+    </script>
+</body>
+</html> 
